@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5000
@@ -36,6 +36,35 @@ async function run() {
           const result = await coffeesCollections.insertOne(newCoffee)
           res.send(result)
       })
+    
+      app.get('/coffees/:id', async (req, res) => {
+          const id = req.params.id
+          const query = { _id: new ObjectId(id) }
+          const result = await coffeesCollections.findOne(query)
+          res.send(result)
+      })
+      
+      app.put('/coffees/:id', async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id) }
+        const updatedCoffee = req.body
+        const options = { upsert: true }
+        const updatedDoc = {
+          $set: updatedCoffee
+        }
+        const result = await coffeesCollections.updateOne(filter, updatedDoc, options)
+        res.send(result)
+      
+      
+      })
+    app.delete('/coffees/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) }
+      const result = await coffeesCollections.deleteOne(query)
+      res.send(result)
+    })
+    
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
