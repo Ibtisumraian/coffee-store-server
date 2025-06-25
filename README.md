@@ -55,5 +55,12 @@ These are packages required for the server to run:
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root of the project and add:
 
+---
+
+
+## 👤 Author
+
+**Ibtisum Raian**  
+Email: ibtisumraian@gmail.com  
+GitHub: [Ibtisumraian](https://github.com/Ibtisumraian)
